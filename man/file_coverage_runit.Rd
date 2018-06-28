@@ -21,3 +21,18 @@ an covr object (identital to [covr::package_coverage()])
 \description{
 So far only works if the test-functions from the \code{test_files} are explicitally called within the same file.
 }
+\examples{
+# load test data
+src <- c(system.file(file.path("inst", "extdata", "functions.R"), package = "filecovrunit"),
+system.file(file.path("inst", "extdata", "functions2.R"), package = "filecovrunit"))
+test <- c(system.file(file.path("inst", "extdata", "test_1.R"), package = "filecovrunit"),
+system.file(file.path("inst", "extdata", "test_2.R"), package = "filecovrunit"))
+pkg_name <- "testpackage3"
+
+# check file coverage of the files
+cov <- filecovrunit::file_coverage_runit(source_files = src,
+test_files = test,
+package_name = pkg_name)
+cov
+covr::report(cov)
+}
