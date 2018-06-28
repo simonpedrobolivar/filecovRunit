@@ -2,22 +2,22 @@
 % Please edit documentation in R/file_coverage_runit.R
 \name{file_coverage_runit}
 \alias{file_coverage_runit}
-\title{Extends the covr::file_coverage function to also accept test files based on RUnit}
+\title{Extends the [covr::file_coverage()] function to also accept test files based on RUnit}
 \usage{
 file_coverage_runit(source_files, test_files, package_name, ...)
 }
 \arguments{
-\item{source_files}{Character vector of source files with function definitions to measure coverage}
+\item{source_files}{Character vector of pathes to source files with function definitions to measure coverage}
 
-\item{test_files}{Character vector of test files with code to test the functions}
+\item{test_files}{Character vector of pathes to test files with code to test the functions}
 
 \item{package_name}{Character with the name of the package the \code{source_files} and \code{test_files} come from}
 
-\item{...}{Additional arguments passed to \code{\link[covr]{package_coverage}}}
+\item{...}{Additional arguments passed to [covr::package_coverage()]}
 }
 \value{
-asdf
+an covr object (identital to [covr::package_coverage()])
 }
 \description{
-Extends the covr::file_coverage function to also accept test files based on RUnit
+So far only works if the test-functions from the \code{test_files} are explicitally called within the same file.
 }
