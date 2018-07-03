@@ -26,9 +26,6 @@ file_coverage_runit <- function(source_files,
                                 #run_test,
                                 package_name,
                                 ...){
-  #source_files <- src
-  #test_files <- test
-  #package_name <- pkg_name
 
   # create temporary directory
   temp_dir <- tempfile()
@@ -36,40 +33,34 @@ file_coverage_runit <- function(source_files,
   # create temporary package with the same name as the package the test and source files come from
   suppressMessages(devtools::create(file.path(temp_dir, package_name), quiet = T))
   dir.create(file.path(temp_dir, package_name, "tests"))
-  #dir.create(file.path(temp_dir, package_name, "inst"))
-  #file.copy(from = run_test, to = file.path(temp_dir, package_name, "test"))
-  devtools::load_all(file.path(temp_dir, package_name))
+  dir.create(file.path(temp_dir, package_name, "inst", "unitTests"),
+             recursive = T)
+#  devtools::load_all(file.path(temp_dir, package_name))
   env <- new.env()
   for(i in 1:length(source_files)){
     # copy the files to new package
-    file.copy(from = test_files[i], to = file.path(temp_dir, package_name,"tests"))
+    file.copy(from = test_files[i], to = file.path(temp_dir, package_name,"inst", "unitTests"))
     file.copy(from = source_files[i], to = file.path(temp_dir, package_name,"R"))
-    if(TRUE){
-      # load test file
-      source(test_files[i], local = env)
-      # read all objects from test file into temporary environment
-      testfuns <- ls(envir = env)#[c(8,9)]
-      rm(list = ls(envir = env), envir = env)
-      for(j in 1:length(testfuns)){
-        testfuns[j] <- paste0(testfuns[j], "()")
-      }
-      # append function call to test files (e.g. test.sum())
-      write(testfuns,
-            file.path(temp_dir, package_name,"tests",
-                      basename(test_files[i])),
-            append = T)
-    }
+  }
+  # create a runit testsuite from template
+  .create_testsuite_template(package_name = package_name,
+                            package_path = file.path(temp_dir, package_name))
+  # check coverage of the new package
+  cov <- suppressWarnings(covr::package_coverage(file.path(temp_dir, package_name), quiet = T))
+
+  if(file.exists(file.path(temp_dir, package_name, "output.txt"))){
+    # interrupt if at least one test function failed and print text protocol
+    txt <- readLines(file.path(temp_dir, package_name, "output.txt"))
+    txt_new <- as.character(sapply(txt, function(x) paste(x, "\n")))
+    stop(txt_new)
   }
 
-  devtools::load_all(file.path(temp_dir, package_name))
-  # check coverage of the new package
-  cov <- covr::package_coverage(file.path(temp_dir, package_name))
   attr(cov, "package")$package <- ""
   # delete temporary package directory
   unlink(file.path(temp_dir, package_name), recursive = T)
+  gc()
   return(cov)
 }
-
 
 
 

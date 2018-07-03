@@ -1,7 +1,4 @@
 # functions
-library(devtools)
-library(covr)
-library(RUnit)
 
 #' @export
 my_sum <- function(a, b) {
