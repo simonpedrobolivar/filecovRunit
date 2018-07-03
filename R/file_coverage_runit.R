@@ -23,7 +23,6 @@
 
 file_coverage_runit <- function(source_files,
                                 test_files,
-                                #run_test,
                                 package_name,
                                 ...){
 
