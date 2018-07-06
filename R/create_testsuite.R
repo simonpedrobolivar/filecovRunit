@@ -1,16 +1,23 @@
 # internal function
 .create_testsuite_template <- function(package_name,
                                        package_path,
-                                       rel_template_path = file.path("inst", "extdata", "template.R")){
+                                       testFileRegexp = "^test.+\\\\.R",
+                                       testFuncRegexp = "^test.+"
+                                       ){
+
+  template_path <- system.file(file.path("inst", "extdata", "template.R"), package = "filecovrunit")
 
   package_path <- normalizePath(package_path,
                                 winslash = "/")
 
-  template_out <- whisker::whisker.render(readLines(rel_template_path),
+  template_out <- whisker::whisker.render(readLines(template_path),
                                           data = list("package_name" = package_name,
-                                                      "package_path" = package_path))
+                                                      "package_path" = package_path,
+                                                      "testFileRegexp" = testFileRegexp,
+                                                      "testFuncRegexp" = testFuncRegexp))
   writeLines(template_out, (file.path(package_path, "tests", "test_runit.R")))
   return(NULL)
 
 }
+
 

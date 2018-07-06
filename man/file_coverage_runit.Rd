@@ -4,14 +4,22 @@
 \alias{file_coverage_runit}
 \title{Extends the [covr::file_coverage()] function to also accept test files based on RUnit}
 \usage{
-file_coverage_runit(source_files, test_files, package_name, ...)
+file_coverage_runit(source_files, test_files, load_package = FALSE,
+  testFileRegexp = "^test.+\\\\\\\\.R", testFuncRegexp = "^test.+",
+  unlink_tmp_dir = FALSE, ...)
 }
 \arguments{
 \item{source_files}{Character vector of pathes to source files with function definitions to measure coverage}
 
 \item{test_files}{Character vector of pathes to test files with code to test the functions}
 
-\item{package_name}{Character with the name of the package the \code{source_files} and \code{test_files} come from}
+\item{load_package}{Boolean. If \code{TRUE} all \code{source_files} need to be located within the directory of the same package. Set \code{TRUE} if your \code{source_files} depend on other functions from your package.}
+
+\item{testFileRegexp}{Regular expression for matching test files. See [covr::runTestSuite()].}
+
+\item{testFuncRegexp}{Regular expression for matching test functions. See [covr::runTestSuite()].}
+
+\item{unlink_tmp_dir}{Boolean. When running [filecovrunit::package_coverage()] a package is created in R's temp directory. If \code{TRUE} the directory where the temporary pacakge is stored is unlinked after each function call. If \code{FALSE} the directory is only deleted when you quit your R-session. Note: When the temp package directory is deleted [filecovrunit::zero_coverage()] does not work anymore!}
 
 \item{...}{Additional arguments passed to [covr::package_coverage()]}
 }
@@ -19,7 +27,7 @@ file_coverage_runit(source_files, test_files, package_name, ...)
 an covr object (identital to [covr::package_coverage()])
 }
 \description{
-So far only works if the test-functions from the \code{test_files} are explicitally called within the same file.
+Extends the [covr::file_coverage()] function to also accept test files based on RUnit
 }
 \examples{
 # load test data
@@ -27,12 +35,12 @@ src <- c(system.file(file.path("inst", "extdata", "functions.R"), package = "fil
 system.file(file.path("inst", "extdata", "functions2.R"), package = "filecovrunit"))
 test <- c(system.file(file.path("inst", "extdata", "test_1.R"), package = "filecovrunit"),
 system.file(file.path("inst", "extdata", "test_2.R"), package = "filecovrunit"))
-pkg_name <- "testpackage3"
 
 # check file coverage of the files
 cov <- filecovrunit::file_coverage_runit(source_files = src,
 test_files = test,
-package_name = pkg_name)
+load_package = FALSE)
 cov
 covr::report(cov)
+filecovrunit::zero_coverage(cov)
 }

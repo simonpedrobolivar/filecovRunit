@@ -1,10 +1,11 @@
 library({{package_name}})
 library(RUnit, quietly = T)
 
+
 testsuite <- RUnit::defineTestSuite("{{package_name}}",
                                     dirs = file.path("{{package_path}}","inst", "unitTests"),
-                                    testFileRegexp = "^test.+\\.R",
-                                    testFuncRegexp = "^test.+")
+                                    testFileRegexp =  "{{testFileRegexp}}",#  "^test.+\\.R",
+                                    testFuncRegexp = "{{testFuncRegexp}}") #"^test.+")
 testResult <- RUnit::runTestSuite(testsuite)
 
 
