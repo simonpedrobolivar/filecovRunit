@@ -14,5 +14,7 @@ Imports:
     devtools,
     covr, 
     RUnit, 
-    whisker
+    whisker, 
+    shiny, 
+    rprojroot
 

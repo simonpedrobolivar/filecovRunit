@@ -13,10 +13,13 @@
 #' @export
 
 zero_coverage <- function(x, ...) {
-  wd_orig <- getwd()
-  setwd(attributes(x)$package$path)
+  #wd_orig <- getwd()
+  #setwd(attributes(x)$package$path)
+  rel <- attributes(x)$relative
+  if(isTRUE(rel)) attributes(x)$relative <- FALSE
   res <- covr::zero_coverage(x, ... = ...)
-  setwd(wd_orig)
-  return(res)
+  attributes(x)$relative <- rel
+  #setwd(wd_orig)
+  #return(res)
 }
 
