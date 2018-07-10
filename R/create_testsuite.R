@@ -5,7 +5,7 @@
                                        testFuncRegexp = "^test.+"
                                        ){
 
-  template_path <- system.file(file.path("inst", "extdata", "template.R"),
+  template_path <- system.file(file.path("extdata", "template.R"),
                                package = "filecovrunit",
                                mustWork = T)
   cat(template_path)
