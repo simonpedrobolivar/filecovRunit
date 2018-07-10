@@ -99,7 +99,7 @@ file_coverage_runit <- function(source_files,
   wd_orig <- getwd()
   setwd(file.path(temp_dir, package_name)) # wd needs to be set to root dir of temp package, otherwise .covrignore is ignored (for some reason)
   cov <- (covr::package_coverage(file.path(temp_dir, package_name),
-                                 quiet = T, relative_path = T))
+                                 quiet = T, relative_path = T, ...))
   setwd(wd_orig)
 
   if(file.exists(file.path(temp_dir, package_name, "output.txt"))){
