@@ -31,10 +31,10 @@ Extends the [covr::file_coverage()] function to also accept test files based on 
 }
 \examples{
 # load test data
-src <- c(system.file(file.path("inst", "extdata", "functions.R"), package = "filecovrunit"),
-system.file(file.path("inst", "extdata", "functions2.R"), package = "filecovrunit"))
-test <- c(system.file(file.path("inst", "extdata", "test_1.R"), package = "filecovrunit"),
-system.file(file.path("inst", "extdata", "test_2.R"), package = "filecovrunit"))
+src <- c(system.file(file.path("extdata", "functions.R"), package = "filecovrunit"),
+system.file(file.path("extdata", "functions2.R"), package = "filecovrunit"))
+test <- c(system.file(file.path("extdata", "test_1.R"), package = "filecovrunit"),
+system.file(file.path("extdata", "test_2.R"), package = "filecovrunit"))
 
 # check file coverage of the files
 cov <- filecovrunit::file_coverage_runit(source_files = src,

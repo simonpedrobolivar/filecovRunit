@@ -5,14 +5,14 @@
                                        testFuncRegexp = "^test.+"
                                        ){
 
-  template_path <- system.file(file.path("inst", "extdata", "template.R"),
+  template_path <- system.file(file.path("extdata", "template.R"),
                                package = "filecovrunit",
                                mustWork = T)
   cat(template_path)
   package_path <- normalizePath(package_path,
                                 winslash = "/")
 
-  template_out <- whisker::whisker.render(readLines(template_path),
+  template_out <- whisker::whisker.render(template = readLines(template_path),
                                           data = list("package_name" = package_name,
                                                       "package_path" = package_path,
                                                       "testFileRegexp" = testFileRegexp,
