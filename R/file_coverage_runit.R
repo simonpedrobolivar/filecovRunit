@@ -27,7 +27,7 @@
 file_coverage_runit <- function(source_files,
                                 test_files,
                                 load_package = FALSE,
-                                testFileRegexp = "^test.+\\\\.R",
+                                testFileRegexp = "^test.+\\\\.R$",
                                 testFuncRegexp = "^test.+",
                                 unlink_tmp_dir = FALSE,
                                 ...){
