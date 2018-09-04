@@ -8,7 +8,6 @@
   template_path <- system.file(file.path("extdata", "template.R"),
                                package = "filecovrunit",
                                mustWork = T)
-  cat(template_path)
   package_path <- normalizePath(package_path,
                                 winslash = "/")
 
