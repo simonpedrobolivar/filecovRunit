@@ -30,31 +30,28 @@ file_coverage_runit <- function(source_files,
                                 testFileRegexp = "^test.+\\\\.R$",
                                 testFuncRegexp = "^test.+",
                                 unlink_tmp_dir = FALSE,
-                                ...){
+                                ...) {
 
-  #source_files <- "C:/User/testpackage3/R/functions.R"
-  #test_files <- "C:/User/testpackage3/inst/unitTests/test_1.R"
-  #package_name <- "testpackage3"
-  #load_package <- TRUE
-  if(load_package){
+  if(load_package) {
     root <- vector(mode = "character", length = length(source_files))
     for(i in 1:length(source_files)){
       # find root directory of source files
-      root[i] <- tryCatch(rprojroot::find_root(rprojroot::is_r_package, path = source_files[i]),
+      root[i] <- tryCatch(rprojroot::find_root(rprojroot::is_r_package,
+                                               path = source_files[i]),
                           error = function(e) return(FALSE))
-      if(root[i] == FALSE){
+      if(root[i] == FALSE) {
         # throw error if the file is not from a package
         stop("source file ", source_files[i], " is not from a package")
       }
     }
-    if(length(unique(root)) > 1){
+    if(length(unique(root)) > 1) {
       # throw error if the files are not frome the same package
       stop("source files are not from the same package")
     }
     root <- root[1]
     package_name <- basename(root)
 
-  }else{ # load_package == FALSe
+  } else { # load_package == FALSe
     root <- NULL
     package_name <- "temppkg"
   }
@@ -79,7 +76,7 @@ file_coverage_runit <- function(source_files,
     all_files <- all_files[!(all_files %in% source_files)]
     for(i in 1:length(all_files)){
       # copy files to temp package
-      file.copy(all_files[i], file.path(temp_dir, package_name, "R"), recursive=T)
+      file.copy(all_files[i], file.path(temp_dir, package_name, "R"), recursive = T)
     }
     all_files <- gsub(pattern = paste0(root, "/"),
                       replacement = "",
@@ -98,8 +95,7 @@ file_coverage_runit <- function(source_files,
   # check coverage of the new package
   wd_orig <- getwd()
   setwd(file.path(temp_dir, package_name)) # wd needs to be set to root dir of temp package, otherwise .covrignore is ignored (for some reason)
-  cov <- (covr::package_coverage(file.path(temp_dir, package_name),
-                                 quiet = T, relative_path = T, ...))
+  cov <- covr::package_coverage(file.path(temp_dir, package_name), ...)
   setwd(wd_orig)
 
   if(file.exists(file.path(temp_dir, package_name, "output.txt"))){

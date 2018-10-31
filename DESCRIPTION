@@ -1,11 +1,10 @@
 Package: filecovrunit
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Test coverage for RUnit-based test files 
 Version: 0.1.4
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: person("Simon", "Schulte", email = "s.pedro@gmx.de")
+Maintainer:  Simon Schulte <s.pedro@gmx.de>
+Description: Extends the [covr::file_coverage()] function to also accept test files based on RUnit. 
 Depends: R (>= 3.3.0)
 License: What license is it under?
 Encoding: UTF-8
