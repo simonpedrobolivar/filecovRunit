@@ -4,7 +4,7 @@ filecovRunit is a small R-package which extends the file_coverage()-function fro
 # Installation #
 
 ```r
-devtools::install_github("simonpedrobolivar/filecovRunit")
+devtools::install_github("simschul/filecovRunit")
 ```
 
 # Example # 
